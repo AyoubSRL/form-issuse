@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DevTask Manager</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>DevTask Manager</h1>
+      <button class="primary">Nuova issue</button>
+      <input type="search" placeholder="Cerca per titolo, descrizione o asseg..." id="searchInput" />
+      <div class="status-summary">
+        <span id="countBacklog">Backlog: 1</span>
+        <span id="countInProgress">In Progress: 1</span>
+        <span id="countReview">Review: 1</span>
+        <span id="countDone">Done: 0</span>
+      </div>
+    </div>
+    <div class="board">
+      <div class="column" data-status="Backlog">
+        <div class="column-header">
+          Backlog <span id="backlogCount">1</span>
+        </div>
+        <div class="cards" id="backlogCards">
+          <div class="card" data-title="Navbar mobile" data-desc="Correggere comportamento su schermi piccoli" data-author="Marco" data-priority="high">
+            <div class="card-title">
+              Navbar mobile
+              <span class="badge high">high</span>
+            </div>
+            <div class="card-desc">Correggere comportamento su schermi piccoli</div>
+            <div class="author">Marco</div>
+            <div class="card-actions">
+              <button class="action-btn move">Sposta</button>
+              <button class="action-btn delete">Elimina</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column" data-status="In Progress">
+        <div class="column-header">
+          In Progress <span id="inProgressCount">1</span>
+        </div>
+        <div class="cards" id="inProgressCards">
+          <div class="card" data-title="Dark mode" data-desc="Aggiungere interruttore tema scuro" data-author="Laura" data-priority="medium">
+            <div class="card-title">
+              Dark mode
+              <span class="badge medium">medium</span>
+            </div>
+            <div class="card-desc">Aggiungere interruttore tema scuro</div>
+            <div class="author">Laura</div>
+            <div class="card-actions">
+              <button class="action-btn move">Sposta</button>
+              <button class="action-btn delete">Elimina</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column" data-status="Review">
+        <div class="column-header">
+          Review <span id="reviewCount">1</span>
+        </div>
+        <div class="cards" id="reviewCards">
+          <div class="card" data-title="Ottimizzare query" data-desc="Ridurre tempi risposta" data-author="Giuseppe" data-priority="critical">
+            <div class="card-title">
+              Ottimizzare query
+              <span class="badge critical">critical</span>
+            </div>
+            <div class="card-desc">Ridurre tempi risposta</div>
+            <div class="author">Giuseppe</div>
+            <div class="card-actions">
+              <button class="action-btn move">Sposta</button>
+              <button class="action-btn delete">Elimina</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column" data-status="Done">
+        <div class="column-header">
+          Done <span id="doneCount">0</span>
+        </div>
+        <div class="cards" id="doneCards">
+          <div class="empty">Nessuna issue</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
