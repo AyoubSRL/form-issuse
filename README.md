@@ -14,6 +14,6 @@ per agevolare il project managment e utilizzabile come tracklist per il team lav
 - javascript
 
 ## funzionalità integrate
-- [ ] creazione di una nuova issue
-- [ ] spostare la issue nella sezione "progresso" adeguata
-- [ ] possibilita di eliminare la issue
+- creazione di una nuova issue
+- spostare la issue nella sezione "progresso" adeguata
+- possibilita di eliminare la issue
