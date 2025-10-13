@@ -21,21 +21,29 @@ const closeBtn = document.getElementById('save');
 }
 
 
-function save(){
-    let html = document.getElementById("popup");
-    html.classList.replace("show","hidden");
-}
+
 
 //aggiungi issue
 function aggiungiIssue(){
-    const utente = "Marco"; //PROVVISORIO prendere dal form!
-    const messaggio = "Correggere comportamento su schermi piccoli"; //PROVVISORIO prendere dal form!
-    const stato = "Backlog"; //PROVVISORIO prendere dal form!
+    const utente = document.getElementById("nomeUtente").value.trim();
+    const messaggio = document.getElementById("descrizione").value.trim();
+    if(!utente || !messaggio){
+        alert("Per favore inserisci i dati mancanti")
+        return;
+    }
+    const stato = document.getElementById("Backlog").checked ? "Backlog" :
+                  document.getElementById("inProgress").checked ? "In Progress" :
+                  document.getElementById("Review").checked ? "Review" :
+                  document.getElementById("Done").checked ? "Done" : "Backlog";
 
     const issue = {utente, messaggio, stato};
+    
     issues.push(issue);
+    console.log(issues);
     salvaInLocalStorage();
     aggiornaBoard();
+    let html = document.getElementById("popup");
+    html.classList.replace("show","hidden");
 }
 
 //Rimuovi singola issue
@@ -51,15 +59,49 @@ function salvaInLocalStorage(){
 
 function aggiornaBoard(){
 //per ogni issue aggiungo nella colonna giusta (in base allo stato) con il nome utente e messaggio, tipo così:
-    //const backlogColumn = document.getElementById("backlog");
-    //const inProgressColumn = document.getElementById("in-progress");
-    //const testingColumn = document.getElementById("testing");
-    //const doneColumn = document.getElementById("done");
-    //issues.forEach((issue, index) => {
-      //crea una card e la aggiunge alla colonna giusta
-      //(index serve per rimuovere la singola issue)
-    //});
+console.log(issues);
+    const backlogColumn = document.getElementById("backlog");
+    const inProgressColumn = document.getElementById("in-progress");
+    const reviewColumn = document.getElementById("review");
+    const doneColumn = document.getElementById("done");
+    backlogColumn.innerHTML = "";
+    inProgressColumn.innerHTML = "";
+    reviewColumn.innerHTML = "";
+    doneColumn.innerHTML = "";
+    document.getElementById("number1").innerText = issues.filter(issue => issue.stato === "Backlog").length;
+    document.getElementById("number2").innerText = issues.filter(issue => issue.stato === "In Progress").length;
+    document.getElementById("number3").innerText = issues.filter(issue => issue.stato === "Review").length;
+    if(document.getElementById("number4")) {
+        document.getElementById("number4").innerText = issues.filter(issue => issue.stato === "Done").length;
+    }
+    issues.forEach((issue, index) => {
+        const card = document.createElement("div");
+        card.className = "card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4 mb-4";
+        card.innerHTML = `
+            <div class="card-body">
+                <h2 class="card-title">${issue.utente}</h2>
+                <p>${issue.messaggio}</p>
+                <div class="card-actions justify-end">          
+                    <button class="btn btn-sm btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
+                </div>
+            </div>
+        `;
+        if(issue.stato === "Backlog"){
+            backlogColumn.appendChild(card);
+        } else if(issue.stato === "In Progress"){
+            inProgressColumn.appendChild(card);
+        } else if(issue.stato === "Review"){
+            reviewColumn.appendChild(card);
+        } else if(issue.stato === "Done"){
+            doneColumn.appendChild(card);
+        } 
+    });
 }
+
+function sposta(){
+    const select = document.getElementById("sposta");
+} 
+
 
 
 //aggiungi persona
