@@ -1,5 +1,5 @@
-# Form-issues
-## Funzionalità 
+# Kanban board per la gestione delle issues
+## Preview 
 Web application per tenere traccia delle issues e il loro progresso utilizzabile in ambito aziendale
 per agevolare il project management e utilizzabile come tracklist per il team lavoratore.
 
