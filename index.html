@@ -1,161 +1,117 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DevTask Manager</title>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DevTask Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-    <div class="flex gap 3 ml-4">
-    <div class="header">
-      <h1>DevTask Manager</h1>
-      <button class="btn btn-outline" id="newIssue" onclick="popup()">nuova issue</button>
-      <input type="search" placeholder="Cerca per titolo, descrizione o asseg..." id="searchInput" />
-      <div>
-        <span id="countBacklog" >Backlog: 1</span>
-        <span id="countInProgress">In Progress: 1</span>
-        <span id="countReview">Review: 1</span>
-        <span id="countDone">Done: 0</span>
-      </div>
-    </div>
-    <div class="indicator m-4">
-  <span class="indicator-item badge badge-primary">0 </span>
-    <div class="card bg-base-100 w-85 shadow-sm">
-        <div class="cards" id="backlogCards">
-          <div class="card" >
-            <div class="card-title">
-              Backlog
-              <span class="badge badge-primary">high</span>
-            </div>
-            <div class="card-desc">Correggere comportamento su schermi piccoli</div>
-            <div class="persona">Marco</div>
-          </div>
-        </div>
-  <div class="card-body">
-    <h2 class="card-title">
- 
-    <p id="descrizione"></p>
-    <div class="card-actions flex items-center">
-  <div class="persona badge-outline mr-20">Marco</div>
-  <div class="flex gap-2">
-    <button class="btn btn-outline btn-info">Sposta</button>
-    <button class="btn btn-outline btn-error">
-      <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
-    </button>
-  </div>
-  </div>
-  </div>
-    </div>
-</div>
-<div class="indicator m-4">
-  <span class="indicator-item badge badge-primary">0 </span>
-    <div class="card bg-base-100 w-85 shadow-sm">
-        <div class="cards" id="inProgressCards">
-          <div class="card" >
-            <div class="card-title">
-              In Progress
-              <span class="badge badge-primary">high</span>
-            </div>
-            <div class="card-desc">Correggere comportamento su schermi piccoli</div>
-            <div class="persona">Marco</div>
-          </div>
-        </div>
-  <div class="card-body">
-    <h2 class="card-title">
- 
-    <p id="descrizione"></p>
-    <div class="card-actions flex items-center">
-  <div class="persona badge-outline mr-20">Marco</div>
-  <div class="flex gap-2">
-    <button class="btn btn-outline btn-info">Sposta</button>
-    <button class="btn btn-outline btn-error">
-      <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
-    </button>
-  </div>
-  </div>
-  </div>
-    </div>
-</div>
-<div class="indicator m-4">
-  <span class="indicator-item badge badge-primary">0 </span>
-    <div class="card bg-base-100 w-85 shadow-sm">
-        <div class="cards" id="reviewCards">
-          <div class="card" >
-            <div class="card-title">
-              Review
-              <span class="badge badge-primary">high</span>
-            </div>
-            <div class="card-desc">Correggere comportamento su schermi piccoli</div>
-            <div class="persona">Marco</div>
-          </div>
-        </div>
-  <div class="card-body">
-    <h2 class="card-title">
- 
-    <p id="descrizione"></p>
-    <div class="card-actions flex items-center">
-  <div class="persona badge-outline mr-20">Marco</div>
-  <div class="flex gap-2">
-    <button class="btn btn-outline btn-info">Sposta</button>
-    <button class="btn btn-outline btn-error">
-      <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
-    </button>
-  </div>
-  </div>
-  </div>
-    </div>
-</div>
-<div class="indicator m-4">
-  <span class="indicator-item badge badge-primary">0 </span>
-    <div class="card bg-base-100 w-85 shadow-sm">
-        <div class="cards" id="doneCards">
-          <div class="card" >
-            <div class="card-title">
-              Done
-              <span class="badge badge-primary">high</span>
-            </div>
-            <div class="card-desc">Correggere comportamento su schermi piccoli</div>
-            <div class="persona">Marco</div>
-          </div>
-        </div>
-  <div class="card-body">
-    <h2 class="card-title">
- 
-    <p id="descrizione"></p>
-    <div class="card-actions flex items-center">
-  <div class="persona badge-outline mr-20">Marco</div>
-  <div class="flex gap-2">
-    <button class="btn btn-outline btn-info">Sposta</button>
-    <button class="btn btn-outline btn-error">
-      <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
-    </button>
-  </div>
-  </div>
-  </div>
-    </div>
-</div>
-<div id="overlay" class="fixed inset-0 bg-white bg-opacity-30 backdrop-blur-sm hidden flex items-center justify-center z-40">
-  <div class="hero bg-base-200 min-h-screen hidden" id="popup">
-    <div class="hero-content text-center">
-    <div class="max-w-md">
-      <div id="properties">
-      <input type="radio" id="Backlog">Backlog<br>   
-      <input type="radio" id="inProgress">Backlog<br>  
-      <input type="radio" id="Review">Backlog<br>
-      </div>
-      <p class="py-6">
-        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-        quasi. In deleniti eaque aut repudiandae et a id nisi.
-      </p>
-      <button class="btn btn-primary" id="save" onclick="save()">save</button>
-    </div>
-  </div>
-  </div>
- </div> 
-<script src="script.js"></script>
+<body class="p-4">
 
+
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold mb-10 text-center">DevTask Manager</h1>
+    <div class="flex flex-wrap items-center gap-2 ">
+      <button class="btn btn-outline mr-160 " id="newIssue" onclick="popup()">Nuova Issue</button>
+      <input type="search" placeholder="Cerca per titolo, descrizione o assegnatario" id="searchInput" class="input input-bordered" />
+      <button class="btn btn-outline mr-auto" id="searchButton" onclick="search()">Cerca</button>
+      <span id="countBacklog">Backlog: 1</span>
+      <span id="countInProgress">In Progress: 1</span>
+      <span id="countReview">Review: 1</span>
+      <span id="countDone">Done: 0</span>  
+  </header>
+  
+
+  <div class="flex flex-wrap gap-20 ml-5 mr-5">
+
+    <div class="w-100">
+      <div class="card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4">
+        <div class="card-body">
+          <h2 class="card-title">Backlog <span class="badge badge-primary">High</span></h2>
+          <p class="card-desc">Correggere comportamento su schermi piccoli</p>
+          <div class="persona badge-outline mb-2">Marco</div>
+          <div class="card-actions flex justify-between items-center">
+            <button class="btn btn-outline btn-info">Sposta</button>
+            <button class="btn btn-outline btn-error">
+              <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="w-100">
+      <div class="card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4">
+        <div class="card-body">
+          <h2 class="card-title">In Progress <span class="badge badge-primary">High</span></h2>
+          <p class="card-desc">Correggere comportamento su schermi piccoli</p>
+          <div class="persona badge-outline mb-2">Marco</div>
+          <div class="card-actions flex justify-between items-center">
+            <button class="btn btn-outline btn-info">Sposta</button>
+            <button class="btn btn-outline btn-error">
+              <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="w-100">
+      <div class="card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4">
+        <div class="card-body">
+          <h2 class="card-title">Review <span class="badge badge-primary">High</span></h2>
+          <p class="card-desc">Correggere comportamento su schermi piccoli</p>
+          <div class="persona badge-outline mb-2">Marco</div>
+          <div class="card-actions flex justify-between items-center">
+            <button class="btn btn-outline btn-info">Sposta</button>
+            <button class="btn btn-outline btn-error">
+              <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="w-100">
+      <div class="card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4">
+        <div class="card-body">
+          <h2 class="card-title">Done <span class="badge badge-primary">High</span></h2>
+          <p class="card-desc">Correggere comportamento su schermi piccoli</p>
+          <div class="persona badge-outline mb-2">Marco</div>
+          <div class="card-actions flex justify-between items-center">
+            <button class="btn btn-outline btn-info">Sposta</button>
+            <button class="btn btn-outline btn-error">
+              <img src="icon-cestino.png" alt="Elimina" class="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="overlay" class="fixed inset-0 bg-white bg-opacity-30 backdrop-blur-sm hidden flex items-center justify-center z-40">
+    <div class="hero bg-base-200 p-8 rounded-lg" id="popup">
+      <div class="hero-content text-center">
+        <div class="max-w-md space-y-4">
+          <div id="properties" class="text-left">
+            <label><input type="radio" name="status" id="Backlog" /> Backlog</label><br>
+            <label><input type="radio" name="status" id="inProgress" /> In Progress</label><br>
+            <label><input type="radio" name="status" id="Review" /> Review</label><br>
+            <label><input type="radio" name="status" id="Done" /> Done</label><br>
+          </div>
+          
+          <button class="btn btn-primary" id="save" onclick="save()">Salva</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
