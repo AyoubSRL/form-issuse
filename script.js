@@ -2,9 +2,8 @@
 //const btnAggiungi = document.getElementById("btn-aggiungi");
 //const btnRimuovi = document.getElementById("btn-rimuovi");
 //const tableBody = document.querySelector("#tabellaPersone tbody"); //ci serve tbody della tabella
-//
-//let people = JSON.parse(localStorage.getItem("people")) || []; // controlla se c'è qualche dato salvato sennò crea l'array vuoto
-//aggiornaTabella();
+let issues = JSON.parse(localStorage.getItem("issues")) || []; // controlla se c'è qualche dato salvato sennò crea l'array vuoto
+aggiornaBoard();
 const overlay = document.getElementById('overlay');
 const openBtn = document.getElementById('newIssue');
 const closeBtn = document.getElementById('save');
@@ -27,6 +26,42 @@ function save(){
     html.classList.replace("show","hidden");
 }
 
+//aggiungi issue
+function aggiungiIssue(){
+    const utente = "Marco"; //PROVVISORIO prendere dal form!
+    const messaggio = "Correggere comportamento su schermi piccoli"; //PROVVISORIO prendere dal form!
+    const stato = "Backlog"; //PROVVISORIO prendere dal form!
+
+    const issue = {utente, messaggio, stato};
+    issues.push(issue);
+    salvaInLocalStorage();
+    aggiornaBoard();
+}
+
+//Rimuovi singola issue
+function rimuoviSingolaIssue(index){
+    issues.splice(index, 1)// index issue rimossa, numero di issue da rimuovere
+    salvaInLocalStorage();
+    aggiornaBoard();
+};
+
+function salvaInLocalStorage(){
+    localStorage.setItem("issues", JSON.stringify(issues));//inserisco i dati nel localStorage
+}
+
+function aggiornaBoard(){
+//per ogni issue aggiungo nella colonna giusta (in base allo stato) con il nome utente e messaggio, tipo così:
+    //const backlogColumn = document.getElementById("backlog");
+    //const inProgressColumn = document.getElementById("in-progress");
+    //const testingColumn = document.getElementById("testing");
+    //const doneColumn = document.getElementById("done");
+    //issues.forEach((issue, index) => {
+      //crea una card e la aggiunge alla colonna giusta
+      //(index serve per rimuovere la singola issue)
+    //});
+}
+
+
 //aggiungi persona
 //btnAggiungi.addEventListener("click", () =>{
 //    const nome = document.getElementById("nome").value.trim();
@@ -47,7 +82,6 @@ function save(){
 //    aggiornaTabella();
 //    form.reset();
 //});
-
 
 //function aggiornaTabella(){
 //    tableBody.innerHTML=""
