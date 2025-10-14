@@ -8,16 +8,19 @@ const overlay = document.getElementById('overlay');
 const openBtn = document.getElementById('newIssue');
 const closeBtn = document.getElementById('save');
 
-  openBtn.addEventListener('click', () => {
-    overlay.classList.remove('hidden');
-  });
-
-  closeBtn.addEventListener('click', () => {
-    overlay.classList.add('hidden');
-  });
-  function popup(){
+openBtn.addEventListener('click', () => {
+  overlay.classList.remove('hidden');
+});
+closeBtn.addEventListener('click', () => {
+  overlay.classList.add('hidden');
+});
+function popup(){
+  let html = document.getElementById("popup");
+  html.classList.replace("hidden","show");
+}
+function nascondiPopup(){
     let html = document.getElementById("popup");
-    html.classList.replace("hidden","show");
+    html.classList.replace("show","hidden");
 }
 
 
