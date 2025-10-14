@@ -10,7 +10,6 @@
 </head>
 <body class="p-4">
 
-
   <header class="mb-8">
     <h1 class="text-3xl font-bold mb-10 text-center">DevTask Manager</h1>
     <div class="flex flex-wrap items-center gap-2 ">
@@ -19,6 +18,12 @@
       <button class="btn btn-outline mr-auto" id="searchButton" onclick="search()">
         <img src="icon-ricerca.png" class="w-3 h-3" />
       </button>
+      <div class="flex flex-wrap gap-2 ml-4 text-xs">
+        <span class="badge badge-neutral">Backlog: <span id="countBacklog"></span></span>
+        <span class="badge badge-warning">In Progress: <span id="countInProgress"></span></span>
+        <span class="badge badge-info">Review: <span id="countReview"></span></span>
+        <span class="badge badge-success">Done: <span id="countDone"></span></span>
+      </div>
   </header>
 
   <div class="flex flex-wrap gap-25 ml-5 mr-5">
