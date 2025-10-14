@@ -58,7 +58,7 @@ function salvaInLocalStorage(){
 }
 
 function aggiornaBoard(){
-//per ogni issue aggiungo nella colonna giusta (in base allo stato) con il nome utente e messaggio, tipo così:
+//per ogni issue aggiungo nella colonna giusta (in base allo stato) con il nome utente e messaggio
 console.log(issues);
     const backlogColumn = document.getElementById("backlog");
     const inProgressColumn = document.getElementById("in-progress");
@@ -82,7 +82,7 @@ console.log(issues);
                 <h2 class="card-title">${issue.utente}</h2>
                 <p>${issue.messaggio}</p>
                 <div class="card-actions justify-end">
-                    <button class="btn btn-sm btn-outline" onclick="sposta()">sposta</button>          
+                    <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
                     <button class="btn btn-sm btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
                 </div>
             </div>
@@ -99,8 +99,14 @@ console.log(issues);
     });
 }
 
-function sposta(){
+function sposta(index){
     const select = document.getElementById("sposta");
+    issues[index].stato = issues[index].stato == "Backlog" ? "In Progress" :
+                            issues[index].stato == "In Progress" ? "Review" :
+                            issues[index].stato == "Review" ? "Done" :
+                            issues[index].stato == "Done" ? "Backlog" : "Backlog";
+    salvaInLocalStorage();
+    aggiornaBoard();
 } 
 
 
