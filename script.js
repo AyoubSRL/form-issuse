@@ -81,7 +81,8 @@ console.log(issues);
             <div class="card-body">
                 <h2 class="card-title">${issue.utente}</h2>
                 <p>${issue.messaggio}</p>
-                <div class="card-actions justify-end">          
+                <div class="card-actions justify-end">
+                    <button class="btn btn-sm btn-outline" onclick="sposta()">sposta</button>          
                     <button class="btn btn-sm btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
                 </div>
             </div>
