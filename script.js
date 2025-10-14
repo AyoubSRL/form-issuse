@@ -69,10 +69,14 @@ console.log(issues);
     reviewColumn.innerHTML = "";
     doneColumn.innerHTML = "";
     document.getElementById("number1").innerText = issues.filter(issue => issue.stato === "Backlog").length;
+    document.getElementById("countBacklog").innerText = issues.filter(issue => issue.stato === "Backlog").length;
     document.getElementById("number2").innerText = issues.filter(issue => issue.stato === "In Progress").length;
+    document.getElementById("countInProgress").innerText = issues.filter(issue => issue.stato === "In Progress").length;
     document.getElementById("number3").innerText = issues.filter(issue => issue.stato === "Review").length;
+    document.getElementById("countReview").innerText = issues.filter(issue => issue.stato === "Review").length;
     if(document.getElementById("number4")) {
         document.getElementById("number4").innerText = issues.filter(issue => issue.stato === "Done").length;
+        document.getElementById("countDone").innerText = issues.filter(issue => issue.stato === "Done").length;
     }
     issues.forEach((issue, index) => {
         const card = document.createElement("div");
