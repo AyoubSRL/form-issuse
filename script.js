@@ -28,9 +28,11 @@ function nascondiPopup(){
 
 //aggiungi issue
 function aggiungiIssue(){
+    const titolo = document.getElementById("nomeTitolo").value.trim();
     const utente = document.getElementById("nomeUtente").value.trim();
+    const priorita = document.getElementById("prioritaScelta").value;
     const messaggio = document.getElementById("descrizione").value.trim();
-    if(!utente || !messaggio){
+    if(!titolo || !utente || !priorita || !messaggio){
         alert("Per favore inserisci i dati mancanti")
         return;
     }
@@ -39,7 +41,7 @@ function aggiungiIssue(){
                   document.getElementById("Review").checked ? "Review" :
                   document.getElementById("Done").checked ? "Done" : "Backlog";
 
-    const issue = {utente, messaggio, stato};
+    const issue = {titolo, utente, priorita, messaggio, stato};
     
     issues.push(issue);
     console.log(issues);
@@ -85,12 +87,18 @@ console.log(issues);
         const card = document.createElement("div");
         card.className = "card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4 mb-4";
         card.innerHTML = `
-            <div class="card-body">
-                <h2 class="card-title">${issue.utente}</h2>
-                <p>${issue.messaggio}</p>
-                <div class="card-actions justify-end">
-                    <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
-                    <button class="btn btn-sm btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
+            <div class="card-body p-4">
+                <div class="flex justify-between items-center mb-1">
+                    <h2 class="card-title text-sm">${issue.titolo}</h2>
+                    <div class="badge badge-${issue.priorita === "High" ? "error" : issue.priorita === "Medium" ? "warning" : "info"} badge-sm">${issue.priorita}</div>
+                </div>
+                <p class="text-xs text-gray-500">${issue.messaggio}</p>
+                <div class="badge badge-neutral badge-sm mt-2 mb-2">${issue.utente}</div>
+                <div class="flex gap-2">
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
+                        <button class="btn btn-sm btn-error" onclick="rimuoviSingolaIssue(${index})"><img src="icon-cestino.png" class="w-3 h-3" /></button>
+                    </div>    
                 </div>
             </div>
         `;
