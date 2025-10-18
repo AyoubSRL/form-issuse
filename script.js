@@ -54,13 +54,13 @@ function aggiungiIssue(){
 
 //Rimuovi singola issue
 function rimuoviSingolaIssue(index){
-    issues.splice(index, 1)// index issue rimossa, numero di issue da rimuovere
+    issues.splice(index, 1)
     salvaInLocalStorage();
     aggiornaBoard();
 };
 
 function salvaInLocalStorage(){
-    localStorage.setItem("issues", JSON.stringify(issues));//inserisco i dati nel localStorage
+    localStorage.setItem("issues", JSON.stringify(issues));
 }
 
 function aggiornaBoard(filteredIssues = issues) {
@@ -84,13 +84,27 @@ function aggiornaBoard(filteredIssues = issues) {
     filteredIssues.forEach((issue, index) => {
         const card = document.createElement("div");
         card.className = "card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4 mb-4";
+        let priorityClass;
+        switch (issue.priorita.toLowerCase()) {
+            case "low":
+            priorityClass = "badge-success"; 
+            break;
+            case "medium":
+            priorityClass = "badge-warning"; 
+            break;
+            case "high":
+            priorityClass = "badge-error";  
+            break;
+            default:
+            priorityClass = "badge-accent";  
+        }
         card.innerHTML = `
     <div class="card-body p-4 space-y-2">
-            <span class="badge badge-warning h-7 absolute top-8 right-10 w-20">${issue.priorita}</span>
+            <span class="badge  h-7 ${priorityClass}  text-white absolute top-8 right-10 w-20">${issue.priorita}</span>
             <h2 class="card-title text-lg font-semibold text-gray-800 uppercase">${issue.titolo}</h2>
             <p class="text-sm text-gray-700">${issue.messaggio}</p>
             <div class="flex justify-between items-center mt-4">
-            <span class="badge badge-warning h-7">${issue.utente}</span>
+            <span class="badge  outline badge-soft badge-neutral  h-7">${issue.utente}</span>
             <div class="flex space-x-2 shadow-sm">
                 <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
                 <button class="btn btn-sm btn-outline btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
@@ -129,7 +143,7 @@ function sposta(index){
 function cerca() {
     const input = document.getElementById("searchInput").value.trim().toLowerCase();
     if (!input) {
-        aggiornaBoard(); // Show all if input is empty
+        aggiornaBoard(); 
         return;
     }
 
@@ -139,7 +153,10 @@ function cerca() {
         issue.titolo.toLowerCase().includes(input)
     );
 
-    console.log("Risultati trovati:", risultati);
+     if (!input || risultati.length === 0) {
+        aggiornaBoard(); 
+        return;
+    }
     aggiornaBoard(risultati);
 }
 
