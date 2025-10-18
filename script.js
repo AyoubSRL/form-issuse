@@ -3,10 +3,11 @@
 //const btnRimuovi = document.getElementById("btn-rimuovi");
 //const tableBody = document.querySelector("#tabellaPersone tbody"); //ci serve tbody della tabella
 let issues = JSON.parse(localStorage.getItem("issues")) || []; // controlla se c'è qualche dato salvato sennò crea l'array vuoto
-aggiornaBoard();
 const overlay = document.getElementById('overlay');
 const openBtn = document.getElementById('newIssue');
 const closeBtn = document.getElementById('save');
+aggiornaBoard();
+document.getElementById("popup").classList.add("hidden");
 
 openBtn.addEventListener('click', () => {
   overlay.classList.remove('hidden');
@@ -28,11 +29,11 @@ function nascondiPopup(){
 
 //aggiungi issue
 function aggiungiIssue(){
-    const titolo = document.getElementById("nomeTitolo").value.trim();
     const utente = document.getElementById("nomeUtente").value.trim();
-    const priorita = document.getElementById("prioritaScelta").value;
     const messaggio = document.getElementById("descrizione").value.trim();
-    if(!titolo || !utente || !priorita || !messaggio){
+    const titolo = document.getElementById("nomeTitolo").value.trim();
+    const priorita = document.getElementById("prioritaScelta").value;
+    if(!utente || !messaggio){
         alert("Per favore inserisci i dati mancanti")
         return;
     }
@@ -41,7 +42,7 @@ function aggiungiIssue(){
                   document.getElementById("Review").checked ? "Review" :
                   document.getElementById("Done").checked ? "Done" : "Backlog";
 
-    const issue = {titolo, utente, priorita, messaggio, stato};
+    const issue = {utente, messaggio, stato, titolo, priorita};
     
     issues.push(issue);
     console.log(issues);
@@ -62,57 +63,55 @@ function salvaInLocalStorage(){
     localStorage.setItem("issues", JSON.stringify(issues));//inserisco i dati nel localStorage
 }
 
-function aggiornaBoard(){
-//per ogni issue aggiungo nella colonna giusta (in base allo stato) con il nome utente e messaggio
-console.log(issues);
+function aggiornaBoard(filteredIssues = issues) {
     const backlogColumn = document.getElementById("backlog");
     const inProgressColumn = document.getElementById("in-progress");
     const reviewColumn = document.getElementById("review");
     const doneColumn = document.getElementById("done");
+
     backlogColumn.innerHTML = "";
     inProgressColumn.innerHTML = "";
     reviewColumn.innerHTML = "";
     doneColumn.innerHTML = "";
-    document.getElementById("number1").innerText = issues.filter(issue => issue.stato === "Backlog").length;
-    document.getElementById("countBacklog").innerText = issues.filter(issue => issue.stato === "Backlog").length;
-    document.getElementById("number2").innerText = issues.filter(issue => issue.stato === "In Progress").length;
-    document.getElementById("countInProgress").innerText = issues.filter(issue => issue.stato === "In Progress").length;
-    document.getElementById("number3").innerText = issues.filter(issue => issue.stato === "Review").length;
-    document.getElementById("countReview").innerText = issues.filter(issue => issue.stato === "Review").length;
-    if(document.getElementById("number4")) {
-        document.getElementById("number4").innerText = issues.filter(issue => issue.stato === "Done").length;
-        document.getElementById("countDone").innerText = issues.filter(issue => issue.stato === "Done").length;
+
+    document.getElementById("number1").innerText = filteredIssues.filter(issue => issue.stato === "Backlog").length;
+    document.getElementById("number2").innerText = filteredIssues.filter(issue => issue.stato === "In Progress").length;
+    document.getElementById("number3").innerText = filteredIssues.filter(issue => issue.stato === "Review").length;
+    if (document.getElementById("number4")) {
+        document.getElementById("number4").innerText = filteredIssues.filter(issue => issue.stato === "Done").length;
     }
-    issues.forEach((issue, index) => {
+
+    filteredIssues.forEach((issue, index) => {
         const card = document.createElement("div");
         card.className = "card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4 mb-4";
         card.innerHTML = `
-            <div class="card-body p-4">
-                <div class="flex justify-between items-center mb-1">
-                    <h2 class="card-title text-sm">${issue.titolo}</h2>
-                    <div class="badge badge-${issue.priorita === "High" ? "error" : issue.priorita === "Medium" ? "warning" : "info"} badge-sm">${issue.priorita}</div>
-                </div>
-                <p class="text-xs text-gray-500">${issue.messaggio}</p>
-                <div class="badge badge-neutral badge-sm mt-2 mb-2">${issue.utente}</div>
-                <div class="flex gap-2">
-                    <div class="card-actions justify-end">
-                        <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
-                        <button class="btn btn-sm btn-error" onclick="rimuoviSingolaIssue(${index})"><img src="icon-cestino.png" class="w-3 h-3" /></button>
-                    </div>    
-                </div>
+    <div class="card-body p-4 space-y-2">
+            <span class="badge badge-warning h-7 absolute top-8 right-10 w-20">${issue.priorita}</span>
+            <h2 class="card-title text-lg font-semibold text-gray-800 uppercase">${issue.titolo}</h2>
+            <p class="text-sm text-gray-700">${issue.messaggio}</p>
+            <div class="flex justify-between items-center mt-4">
+            <span class="badge badge-warning h-7">${issue.utente}</span>
+            <div class="flex space-x-2 shadow-sm">
+                <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
+                <button class="btn btn-sm btn-outline btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
             </div>
-        `;
-        if(issue.stato === "Backlog"){
+        </div>
+    </div>
+`;
+
+
+        if (issue.stato === "Backlog") {
             backlogColumn.appendChild(card);
-        } else if(issue.stato === "In Progress"){
+        } else if (issue.stato === "In Progress") {
             inProgressColumn.appendChild(card);
-        } else if(issue.stato === "Review"){
+        } else if (issue.stato === "Review") {
             reviewColumn.appendChild(card);
-        } else if(issue.stato === "Done"){
+        } else if (issue.stato === "Done") {
             doneColumn.appendChild(card);
-        } 
+        }
     });
 }
+
 
 function sposta(index){
     const select = document.getElementById("sposta");
@@ -126,59 +125,25 @@ function sposta(index){
 
 
 
-//aggiungi persona
-//btnAggiungi.addEventListener("click", () =>{
-//    const nome = document.getElementById("nome").value.trim();
-//    const cognome = document.getElementById("cognome").value.trim();
-//    const email = document.getElementById("email").value.trim();
-//    const dob = document.getElementById("dataDiNascita").value;
-//
-//    if(!nome || !cognome|| !email || !dob){
-//        alert("Per favore inserisci i dati mancanti")
-//        return;
-//    }
-//
-//    //creo un oggetto js cioè una "scheda" con 4 coppie chiave valore
-//    const person = {nome, cognome, email, dob};
-//    people.push(person);
-//
-//    saveInLocalStorage();
-//    aggiornaTabella();
-//    form.reset();
-//});
+ 
+function cerca() {
+    const input = document.getElementById("searchInput").value.trim().toLowerCase();
+    if (!input) {
+        aggiornaBoard(); // Show all if input is empty
+        return;
+    }
 
-//function aggiornaTabella(){
-//    tableBody.innerHTML=""
-//    people.forEach((person, index) => {
-//        const row = document.createElement("tr");  
-//        row.innerHTML = `
-//        <td>${person.nome}</td>
-//        <td>${person.cognome}</td>
-//        <td>${person.email}</td>
-//        <td>${person.dob}</td>
-//        <td><button onclick = "rimuoviSingolaPersona(${index})">Rimuovi</Button></td>`;
-//        tableBody.appendChild(row);
-//    });
-//
-//}
-//
-////Rimuovi singola persona
-//function rimuoviSingolaPersona(index){
-//    people.splice(index, 1)// index persona rimossa, numero di persone da rimuovere
-//    saveInLocalStorage();
-//    aggiornaTabella();
-//};
-//
-//function saveInLocalStorage(){
-//    localStorage.setItem("people", JSON.stringify(people));//inserisco i dati nel localstorage
-//}
-//
-//
-//btnRimuovi.addEventListener("click", () =>{
-//    people = [];
-//    localStorage.removeItem("people");
-//    aggiornaTabella();
-//});
+    const risultati = issues.filter(issue =>
+        issue.utente.toLowerCase().includes(input) ||
+        issue.messaggio.toLowerCase().includes(input) ||
+        issue.titolo.toLowerCase().includes(input)
+    );
+
+    console.log("Risultati trovati:", risultati);
+    aggiornaBoard(risultati);
+}
+
+
 
 
 
