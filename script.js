@@ -1,8 +1,5 @@
-//const form = document.getElementById("formPersona");
-//const btnAggiungi = document.getElementById("btn-aggiungi");
-//const btnRimuovi = document.getElementById("btn-rimuovi");
-//const tableBody = document.querySelector("#tabellaPersone tbody"); //ci serve tbody della tabella
-let issues = JSON.parse(localStorage.getItem("issues")) || []; // controlla se c'è qualche dato salvato sennò crea l'array vuoto
+
+let issues = JSON.parse(localStorage.getItem("issues")) || []; 
 const overlay = document.getElementById('overlay');
 const openBtn = document.getElementById('newIssue');
 const closeBtn = document.getElementById('save');
@@ -27,13 +24,13 @@ function nascondiPopup(){
 
 
 
-//aggiungi issue
+
 function aggiungiIssue(){
     const utente = document.getElementById("nomeUtente").value.trim();
     const messaggio = document.getElementById("descrizione").value.trim();
     const titolo = document.getElementById("nomeTitolo").value.trim();
     const priorita = document.getElementById("prioritaScelta").value;
-    if(!utente || !messaggio){
+    if(!utente || !messaggio || !titolo){
         alert("Per favore inserisci i dati mancanti")
         return;
     }
@@ -52,7 +49,7 @@ function aggiungiIssue(){
     html.classList.replace("show","hidden");
 }
 
-//Rimuovi singola issue
+
 function rimuoviSingolaIssue(index){
     issues.splice(index, 1)
     salvaInLocalStorage();
