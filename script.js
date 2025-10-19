@@ -1,7 +1,3 @@
-//const form = document.getElementById("formPersona");
-//const btnAggiungi = document.getElementById("btn-aggiungi");
-//const btnRimuovi = document.getElementById("btn-rimuovi");
-//const tableBody = document.querySelector("#tabellaPersone tbody"); //ci serve tbody della tabella
 let issues = JSON.parse(localStorage.getItem("issues")) || []; // controlla se c'è qualche dato salvato sennò crea l'array vuoto
 const overlay = document.getElementById('overlay');
 const openBtn = document.getElementById('newIssue');
@@ -25,9 +21,7 @@ function nascondiPopup(){
 }
 
 
-
-
-//aggiungi issue
+//Aggiungi issue
 function aggiungiIssue(){
     const utente = document.getElementById("nomeUtente").value.trim();
     const messaggio = document.getElementById("descrizione").value.trim();
@@ -63,6 +57,7 @@ function salvaInLocalStorage(){
     localStorage.setItem("issues", JSON.stringify(issues));
 }
 
+//Aggiorna board
 function aggiornaBoard(filteredIssues = issues) {
     const backlogColumn = document.getElementById("backlog");
     const inProgressColumn = document.getElementById("in-progress");
@@ -77,9 +72,7 @@ function aggiornaBoard(filteredIssues = issues) {
     document.getElementById("number1").innerText = filteredIssues.filter(issue => issue.stato === "Backlog").length;
     document.getElementById("number2").innerText = filteredIssues.filter(issue => issue.stato === "In Progress").length;
     document.getElementById("number3").innerText = filteredIssues.filter(issue => issue.stato === "Review").length;
-    if (document.getElementById("number4")) {
-        document.getElementById("number4").innerText = filteredIssues.filter(issue => issue.stato === "Done").length;
-    }
+    document.getElementById("number4").innerText = filteredIssues.filter(issue => issue.stato === "Done").length;
 
     filteredIssues.forEach((issue, index) => {
         const card = document.createElement("div");
@@ -99,19 +92,18 @@ function aggiornaBoard(filteredIssues = issues) {
             priorityClass = "badge-accent";  
         }
         card.innerHTML = `
-    <div class="card-body p-4 space-y-2">
+        <div class="card-body p-4 space-y-2">
             <span class="badge  h-7 ${priorityClass}  text-white absolute top-8 right-10 w-20">${issue.priorita}</span>
             <h2 class="card-title text-lg font-semibold text-gray-800 uppercase">${issue.titolo}</h2>
             <p class="text-sm text-gray-700">${issue.messaggio}</p>
             <div class="flex justify-between items-center mt-4">
-            <span class="badge  outline badge-soft badge-neutral  h-7">${issue.utente}</span>
-            <div class="flex space-x-2 shadow-sm">
-                <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
-                <button class="btn btn-sm btn-outline btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
+                <span class="badge  outline badge-soft badge-neutral  h-7">${issue.utente}</span>
+                <div class="flex space-x-2 shadow-sm">
+                    <button class="btn btn-sm btn-outline btn-primary" onclick="sposta(${index})">Sposta</button>
+                    <button class="btn btn-sm btn-outline btn-error" onclick="rimuoviSingolaIssue(${index})">Rimuovi</button>
+                </div>
             </div>
-        </div>
-    </div>
-`;
+        </div>`;
 
 
         if (issue.stato === "Backlog") {
@@ -126,55 +118,33 @@ function aggiornaBoard(filteredIssues = issues) {
     });
 }
 
-
+//Sposta issue
 function sposta(index){
-    const select = document.getElementById("sposta");
     issues[index].stato = issues[index].stato == "Backlog" ? "In Progress" :
                             issues[index].stato == "In Progress" ? "Review" :
                             issues[index].stato == "Review" ? "Done" :
-                            issues[index].stato == "Done" ? "Backlog" : "Backlog";
+                            issues[index].stato == "Done" ? "Backlog" : "Backlog"; //Da Done a Backlog in caso si avesse sbagliato a spostare
     salvaInLocalStorage();
     aggiornaBoard();
 } 
 
 
-
- 
+//Cerca issue
 function cerca() {
     const input = document.getElementById("searchInput").value.trim().toLowerCase();
     if (!input) {
         aggiornaBoard(); 
         return;
     }
-
     const risultati = issues.filter(issue =>
         issue.utente.toLowerCase().includes(input) ||
         issue.messaggio.toLowerCase().includes(input) ||
         issue.titolo.toLowerCase().includes(input)
     );
-
-     if (!input || risultati.length === 0) {
+    if (risultati.length === 0) {
         aggiornaBoard(); 
         return;
     }
+
     aggiornaBoard(risultati);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
