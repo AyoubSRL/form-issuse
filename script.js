@@ -1,4 +1,4 @@
-let issues = JSON.parse(localStorage.getItem("issues")) || []; // controlla se c'è qualche dato salvato sennò crea l'array vuoto
+let issues = JSON.parse(localStorage.getItem("issues")) || []; //Controlla se c'è qualche dato salvato sennò crea l'array vuoto
 const overlay = document.getElementById('overlay');
 const openBtn = document.getElementById('newIssue');
 const closeBtn = document.getElementById('save');
@@ -27,7 +27,7 @@ function aggiungiIssue(){
     const messaggio = document.getElementById("descrizione").value.trim();
     const titolo = document.getElementById("nomeTitolo").value.trim();
     const priorita = document.getElementById("prioritaScelta").value;
-    if(!utente || !messaggio){
+    if(!utente || !messaggio || !titolo){
         alert("Per favore inserisci i dati mancanti")
         return;
     }
@@ -46,7 +46,7 @@ function aggiungiIssue(){
     html.classList.replace("show","hidden");
 }
 
-//Rimuovi singola issue
+
 function rimuoviSingolaIssue(index){
     issues.splice(index, 1)
     salvaInLocalStorage();

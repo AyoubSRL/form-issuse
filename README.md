@@ -8,21 +8,30 @@ per agevolare il project management e utilizzabile come tracklist per il team la
 - Choukrani Ayoub
 - Rozzini Luca
 
-## Linguaggi e framework utilizzati
+## requisiti di dominio
 - daisyUI (framework grafico)
 - HTML
 - JavaScript
 
-## Descrizione del progetto
+## requisiti funzionali
 La web app permette di:
 - Aggiungere in qualsiasi momento una nuova issue tramite form
-- Visualizzare e gestire le issues tramite una kanban board composta dalle colonne **Backlog**, **In Progress**, **Review** e **Done**
-- Eliminare la issue
+- Visualizzare e gestire le issues tramite una kanban board composta dalle colonne **Backlog**, **In Progress**, **Review** e 
+- Eliminare la issues
 - Salvare lo stato della board nel `localStorage`, così da mantenere i dati anche dopo il refresh della pagina e per ricostruire la board all'avvio
 - Aggiornare automaticamente la board e il `localStorage` dopo ogni operazione
 
 ## Requisiti non funzionali
-- **Interfaccia utente**: Utilizzo di daisyUI per garantire un design moderno e responsivo
-- **Versionamento codice**: Uso di GitHub per il versionamento e la collaborazione
+- **Interfaccia utente**: garantire un design moderno e responsivo e allo stesso momento un'interfaccia intuitiva
 - **Accessibilità**: Form e interazioni devono essere semplici e intuitivi da usare
 - **Prestazioni**: La board deve essere reattiva e fluida durante le operazioni
+
+## requisiti di vincolo
+- **vincolo di tempo**: richiesta consegna progetto in data 20/10/2025
+- **vincolo di sviluppo**: interfaccia grafica da realizzare con tailwind o daysiUI e utilizzo di gitHub come ambiente di collaborazione
+
+## analisi di affidabiliità
+- **tempistica**: il progetto è realizzabile in breve tempo
+- **costi**: il progetto è poco costoso in quanto un team composto da 3 persone può realizzarlo
+- **utilizzabilità**: l'applicativo è utilizzabile da tutti gli utenti senza alcun requisito di programmazione
+
