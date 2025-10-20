@@ -78,14 +78,15 @@ function aggiornaBoard(filteredIssues = issues) {
         const card = document.createElement("div");
         card.className = "card bg-base-100 shadow-sm outline-1 outline-gray-300 p-4 mb-4";
         let priorityClass;
+        console.log(issue.priorita);
         switch (issue.priorita) {
-            case "low":
+            case "Low":
             priorityClass = "badge-success"; 
             break;
-            case "medium":
+            case "Medium":
             priorityClass = "badge-warning"; 
             break;
-            case "high":
+            case "High":
             priorityClass = "badge-error";  
             break;
             default:
