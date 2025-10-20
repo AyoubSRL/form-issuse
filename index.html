@@ -11,15 +11,21 @@
 <body class="bg-base-200 min-h-screen p-6">
   <header class="flex flex-col md:flex-row justify-between items-center gap-4 mb-10">
     <h1 class="text-4xl font-extrabold text-center text-primary">DevTask Manager</h1>
-
-    <div class="flex flex-wrap gap-2 items-center justify-center">
+      <div  id="alert" class="alert alert-warning relative right-0 hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>Warning: no match found</span>
+        </div>
+      <div class="flex flex-wrap gap-2 items-center justify-center">
       <button class="btn btn-primary" id="newIssue" onclick="popup()">+ Nuova Issue</button>
 
+      
       <label class="input input-bordered flex items-center gap-2 w-80">
         <input
-          type="search"placeholder="Cerca titolo, descrizione o assegnatario"id="searchInput"class="grow"/>
+          type="search" placeholder="Cerca titolo, descrizione o assegnatario"id="searchInput"class="grow"/>
         <button id="searchButton" onclick="cerca()">
-          <img src="icon-ricerca.png" class="w-4 h-4" />
+          <img id="icon-ricerca" src="icon-ricerca.png" class="w-4 h-4" />
         </button>
       </label>
     </div>
@@ -68,12 +74,20 @@
   </div>
 
 
-  <div id="popup" class="fixed inset-0 bg-white bg-opacity-30 backdrop-blur-sm hidden flex items-center justify-center z-40"> 
-    <div class="hero bg-base-300 w-350 h-170 rounded-3xl" >
+  
+  <div id="popup" class="fixed inset-0 bg-opacity-50 backdrop-blur-sm hidden flex items-center justify-center z-40"> 
+    
+    <div class="hero bg-base-300 w-150 h-185 outline rounded-3xl" >
       <div class="hero-content text-center">
         <div class="max-w-md space-y-4 text-left relative w-full">
-          <button class="btn btn-sm bg-base-100 btn-circle btn-outline btn-ghost relative top-0 left-190 hover:bg-error hover:text-white transition" onclick="nascondiPopup()">✕</button>
+          <button class="btn btn-sm bg-base-100 btn-circle btn-outline btn-ghost relative top-0 left-100 hover:bg-error hover:text-white transition" onclick="nascondiPopup()">✕</button>
           <label class="text-2xl font-bold mb-1 ml-10">Nuova Issue</label>
+          <div  id="alertPopup" role="alert" class="alert alert-error hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Error: campi non compilati</span>
+        </div>
         
           <div id="titolo">
             <label class="font-medium">Titolo:</label><br />

@@ -28,7 +28,7 @@ function aggiungiIssue(){
     const titolo = document.getElementById("nomeTitolo").value.trim();
     const priorita = document.getElementById("prioritaScelta").value;
     if(!utente || !messaggio || !titolo){
-        alert("Per favore inserisci i dati mancanti")
+        document.getElementById("alertPopup").classList.replace("hidden", "show");
         return;
     }
     const stato = document.getElementById("Backlog").checked ? "Backlog" :
@@ -132,20 +132,31 @@ function sposta(index){
 
 //Cerca issue
 function cerca() {
-    const input = document.getElementById("searchInput").value.trim().toLowerCase();
+    const inputElement = document.getElementById("searchInput");
+    const input = inputElement.value.trim().toLowerCase();
+
     if (!input) {
-        aggiornaBoard(); 
+        document.getElementById("alert").classList.replace("show", "hidden");
+        aggiornaBoard();
         return;
     }
+
     const risultati = issues.filter(issue =>
         issue.utente.toLowerCase().includes(input) ||
         issue.messaggio.toLowerCase().includes(input) ||
         issue.titolo.toLowerCase().includes(input)
     );
+
     if (risultati.length === 0) {
-        aggiornaBoard(); 
-        return;
+        aggiornaBoard();
+        document.getElementById("alert").classList.replace("hidden", "show");
+    } else {
+        aggiornaBoard(risultati);
+        document.getElementById("alert").classList.replace("show", "hidden");
     }
 
-    aggiornaBoard(risultati);
+
 }
+
+
+
