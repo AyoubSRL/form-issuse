@@ -23,6 +23,7 @@ function nascondiPopup(){
 
 //Aggiungi issue
 function aggiungiIssue(){
+    document.getElementById("alertPopup").classList.replace("show", "hidden");
     const utente = document.getElementById("nomeUtente").value.trim();
     const messaggio = document.getElementById("descrizione").value.trim();
     const titolo = document.getElementById("nomeTitolo").value.trim();
@@ -135,7 +136,9 @@ function cerca() {
     const inputElement = document.getElementById("searchInput");
     const input = inputElement.value.trim().toLowerCase();
 
-    if (!input) {
+    
+
+    if (!input || searchInput.value === "") {
         document.getElementById("alert").classList.replace("show", "hidden");
         aggiornaBoard();
         return;
